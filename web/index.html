@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f5f2">
+  <title>Quant Lab · A股日频回测</title>
+  <style>
+    :root{--paper:#f4f5f2;--card:#fff;--ink:#18231f;--muted:#738078;--line:#e4e9e4;--green:#168765;--green2:#e9f5ef;--red:#c45d54;--amber:#e9a649;--navy:#183b33;--shadow:0 10px 34px rgba(31,56,45,.055)}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;font-size:14px;line-height:1.5}
+    .shell{max-width:1440px;margin:0 auto;padding:0 44px 56px}.topbar{height:74px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #dfe5df}.brand{display:flex;align-items:center;gap:11px;font-weight:720;letter-spacing:-.02em}.logo{width:32px;height:32px;background:var(--navy);border-radius:10px;display:grid;place-items:center;color:#cbf5dd;font-size:17px}.brand small{display:block;color:var(--muted);font-size:10px;font-weight:550;letter-spacing:.13em;text-transform:uppercase;margin-top:1px}.top-right{display:flex;align-items:center;gap:16px;color:var(--muted);font-size:12px}.live{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;background:#e9f5ed;border-radius:99px;color:#287a58;font-weight:650}.dot{width:7px;height:7px;border-radius:50%;background:#43ae77;box-shadow:0 0 0 3px #ccebd8}
+    .hero{padding:35px 0 24px;display:flex;justify-content:space-between;align-items:end}.eyebrow{font-size:11px;letter-spacing:.15em;color:var(--green);font-weight:750;text-transform:uppercase}.hero h1{font-size:30px;letter-spacing:-.045em;margin:5px 0 5px;line-height:1.2}.hero p{margin:0;color:var(--muted);font-size:13px}.dataset{font-size:11px;color:#738078;border:1px solid #dce3dd;background:#fafbf9;padding:8px 12px;border-radius:8px;white-space:nowrap}
+    .builder{background:var(--navy);border-radius:16px;color:#fff;padding:22px 24px 18px;box-shadow:var(--shadow);position:relative;overflow:hidden}.builder:after{content:"";position:absolute;width:290px;height:290px;border:1px solid rgba(214,248,227,.08);border-radius:50%;right:-96px;top:-200px;box-shadow:0 0 0 35px rgba(214,248,227,.025),0 0 0 70px rgba(214,248,227,.02);pointer-events:none}.builder-head{display:flex;justify-content:space-between;align-items:start;gap:15px;position:relative;z-index:1}.builder h2{margin:0;font-size:15px;letter-spacing:-.01em}.builder .hint{font-size:11px;color:#adc4b7;margin-top:5px}.presets{display:flex;gap:7px;position:relative;z-index:1}.preset{border:1px solid rgba(226,247,232,.24);color:#cde6d4;background:transparent;border-radius:6px;padding:6px 9px;font-size:10px;cursor:pointer}.preset:hover{background:rgba(255,255,255,.1)}.factor-row{display:flex;gap:10px;margin-top:17px;position:relative;z-index:1}.factor-wrap{flex:1;min-width:0;position:relative}.factor-wrap label{display:block;font-size:10px;color:#b4cabc;margin-bottom:5px}.factor{width:100%;height:43px;border:1px solid #416357;border-radius:8px;background:#102e27;color:#e2f2e7;padding:0 13px;font:13px ui-monospace,SFMono-Regular,Menlo,monospace;outline:none}.factor:focus{border-color:#75bf92;box-shadow:0 0 0 3px rgba(117,191,146,.16)}.run{align-self:end;height:43px;border:0;border-radius:8px;background:#b9edca;color:#12392c;padding:0 18px;font-weight:750;font-size:12px;cursor:pointer;white-space:nowrap;transition:.15s}.run:hover{background:#d2f5dc;transform:translateY(-1px)}.run:disabled{opacity:.58;cursor:wait;transform:none}.builder-foot{display:flex;gap:7px;align-items:center;color:#aac2b3;font-size:10px;margin-top:11px;position:relative;z-index:1}.chip{border:1px solid #46665a;padding:3px 7px;border-radius:5px;color:#d2e3d7}
+    .mode-tabs{display:flex;gap:4px;padding:3px;background:#102e27;border:1px solid #416357;border-radius:8px}.mode-tab{border:0;background:transparent;color:#b6cdbd;padding:6px 10px;border-radius:5px;font-size:10px;cursor:pointer}.mode-tab.active{background:#d0efda;color:#183b33;font-weight:750}.code-panel{position:relative;z-index:1;margin-top:15px}.code-label{display:block;font-size:10px;color:#b4cabc;margin-bottom:5px}.strategy-code{width:100%;height:255px;resize:vertical;border:1px solid #416357;border-radius:8px;background:#102e27;color:#e2f2e7;padding:12px 14px;font:12px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace;outline:none;tab-size:4}.strategy-code:focus{border-color:#75bf92;box-shadow:0 0 0 3px rgba(117,191,146,.16)}.code-help{font-size:10px;color:#9bb7a3;margin-top:8px;line-height:1.65}.code-help code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#d4ead9}.strategy-import{display:flex;gap:8px;align-items:center;margin-top:8px}.strategy-import label,.strategy-import a{font-size:10px;color:#c1dfca;border:1px solid #46665a;border-radius:6px;padding:5px 8px;cursor:pointer;text-decoration:none}.strategy-import input{display:none}.strategy-import span{font-size:9px;color:#91ad99}.mode-tabs[hidden],.code-panel[hidden],.factor-row[hidden],.builder-foot[hidden],.presets[hidden]{display:none}
+    details{position:relative;z-index:1;margin-top:12px;border-top:1px solid rgba(214,241,222,.15);padding-top:10px}summary{font-size:10px;color:#b7cdbd;cursor:pointer;list-style:none;width:max-content}summary::-webkit-details-marker{display:none}summary:after{content:"＋";padding-left:7px;color:#83b395}details[open] summary:after{content:"－"}.advanced{display:flex;gap:15px;align-items:end;padding-top:12px}.field{display:flex;flex-direction:column;gap:5px;color:#b7cdbd;font-size:10px}.field input{width:120px;height:32px;color:white;background:#102e27;border:1px solid #416357;border-radius:6px;padding:0 8px;font-size:12px;outline:none}.field input[type=date]{width:143px;color-scheme:dark}.field .small{width:142px}.factor-help{color:#90ac99;font-size:10px;margin-left:auto;max-width:450px;text-align:right}
+    .notice{min-height:23px;color:#67776c;font-size:11px;padding:8px 2px 0}.notice.error{color:#b3463d}.notice.busy{color:#44745a}
+    .section-head{display:flex;align-items:center;justify-content:space-between;margin:27px 0 12px}.section-head h2{font-size:15px;margin:0;letter-spacing:-.025em}.period{color:var(--muted);font-size:11px}.download{color:var(--green);font-weight:650;font-size:11px;text-decoration:none;margin-left:12px}.download:hover{text-decoration:underline}
+    .layer-card{margin-top:14px;padding:18px 19px 13px}.layer-chart{height:270px;margin-top:12px}.layer-chart canvas{width:100%;height:100%;display:block}.layer-legend{display:flex;align-items:center;justify-content:flex-end;gap:12px;flex-wrap:wrap;color:#64766a;font-size:10px}.layer-legend span{display:inline-flex;align-items:center;gap:5px}.layer-legend i{width:8px;height:8px;border-radius:50%;display:inline-block}.layer-note{color:#8c9990;font-size:10px;margin-top:2px}
+    .grid{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(265px,.82fr);gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:13px;box-shadow:0 2px 10px rgba(25,55,40,.025)}.chart-card{padding:18px 19px 13px;min-height:338px}.card-head{display:flex;justify-content:space-between;align-items:start}.card-title{font-size:12px;font-weight:700}.card-sub{font-size:10px;color:var(--muted);margin-top:3px}.legend{display:flex;align-items:center;gap:6px;font-size:10px;color:#64766a}.legend i{width:7px;height:7px;background:#2b9870;border-radius:50%;display:block}.chart{height:248px;margin-top:13px;position:relative}.chart canvas{width:100%;height:100%;display:block}.empty{position:absolute;inset:0;display:grid;place-items:center;color:#96a29a;font-size:12px}.tooltip{position:absolute;padding:7px 9px;background:#173d32;color:#eff9f1;border-radius:6px;font-size:10px;pointer-events:none;opacity:0;transform:translate(10px,-100%);white-space:nowrap;z-index:2}.chart-foot{display:flex;justify-content:space-between;color:#9aa59d;font-size:9px;margin-top:1px}
+    .metric-side{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{padding:15px 15px 13px;min-height:102px}.metric-label{font-size:10px;color:var(--muted);display:flex;align-items:center;gap:6px}.metric-value{font-size:23px;font-weight:720;letter-spacing:-.045em;margin:8px 0 2px;font-variant-numeric:tabular-nums}.metric-note{font-size:9px;color:#91a097}.good{color:var(--green)}.bad{color:var(--red)}.metric.accent{background:#edf6f0;border-color:#dcebe0}.metric.accent .metric-value{color:#1a805a}
+    .bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.mini-card{padding:16px 18px;display:flex;align-items:center;justify-content:space-between;min-height:86px}.mini-left{display:flex;align-items:center;gap:12px}.mini-icon{width:34px;height:34px;background:#eff4ef;color:#47755e;border-radius:10px;display:grid;place-items:center;font-size:15px}.mini-label{font-size:10px;color:var(--muted)}.mini-value{font-size:18px;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums}.mini-right{font-size:10px;color:#87958c;text-align:right}.rule-note{margin-top:14px;border:1px solid #e7e9dd;background:#f9f9f5;padding:12px 15px;border-radius:9px;color:#788079;font-size:10px;line-height:1.7}.rule-note strong{color:#4f6257}.footer{display:flex;justify-content:space-between;color:#9aa49d;font-size:9px;margin-top:21px;padding:0 2px}
+    .audit-card{margin-top:14px;padding:17px 19px}.audit-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;margin-top:14px}.audit-item{background:#f7f9f6;border:1px solid #edf0ec;border-radius:9px;padding:11px 12px}.audit-label{font-size:9px;color:var(--muted)}.audit-value{font-size:17px;font-weight:720;margin-top:5px;font-variant-numeric:tabular-nums}.audit-note{font-size:10px;color:#8a6b3f;background:#fcf8ef;border-radius:7px;padding:8px 10px;margin-top:11px}.audit-note.ok{color:#44775e;background:#eff7f1}.audit-reasons{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}.audit-reason{font-size:9px;color:#64766a;background:#f1f4f1;border-radius:5px;padding:5px 8px}.audit-reason b{color:#263d32;margin-left:4px}.audit-foot{font-size:9px;color:#98a29b;margin-top:9px}
+    @media(max-width:850px){.shell{padding:0 20px 38px}.hero{align-items:start;flex-direction:column;gap:12px}.grid{grid-template-columns:1fr}.metric-side{grid-template-columns:repeat(4,1fr)}.metric{min-height:95px}.bottom-grid{grid-template-columns:1fr}.audit-grid{grid-template-columns:repeat(3,1fr)}.dataset{white-space:normal}.factor-help{display:none}}
+    @media(max-width:570px){.shell{padding:0 13px 30px}.topbar{height:62px}.top-right>span:not(.live){display:none}.hero{padding:26px 0 19px}.hero h1{font-size:25px}.builder{padding:18px 14px}.builder-head{flex-direction:column}.presets{flex-wrap:wrap}.factor-row{flex-direction:column}.run{width:100%}.builder-foot{flex-wrap:wrap}.advanced{display:grid;grid-template-columns:1fr 1fr}.field input,.field input[type=date],.field .small{width:100%}.metric-side{grid-template-columns:1fr 1fr}.audit-grid{grid-template-columns:1fr 1fr}.chart-card{padding:15px 12px}.chart{height:220px}.section-head{align-items:start;gap:8px}.downloads{display:flex;flex-direction:column;gap:4px;text-align:right}.download{margin-left:0}.footer{gap:12px;line-height:1.6}.footer span:last-child{text-align:right}}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand"><div class="logo">↗</div><div>Quant Lab<small>Research workspace</small></div></div>
+      <div class="top-right"><span>课程数据 · A 股日频矩阵</span><span class="live"><i class="dot"></i> 本地运行</span></div>
+    </header>
+    <section class="hero">
+      <div><div class="eyebrow">Systematic investing · 01</div><h1>把选股想法，放进市场里跑一遍。</h1><p>从快速因子验证，到带状态和自定义逻辑的逐日策略。</p></div>
+      <div id="dataset" class="dataset">课程日频数据 · 本地快照</div>
+    </section>
+    <section class="builder">
+      <div class="builder-head"><div><h2>策略逻辑</h2><div class="hint">简单想法用表达式；需要状态、条件或自定义仓位时，切换到 Python 策略。</div></div>
+        <div id="modeTabs" class="mode-tabs"><button class="mode-tab" data-mode="formula">表达式</button><button class="mode-tab active" data-mode="python">Python 策略</button></div>
+        <div id="formulaPresets" class="presets" hidden><button class="preset" data-formula="-five_dr">5DR · 5 日反转</button><button class="preset" data-formula="close * cumadj / (delay(close, 20) * delay(cumadj, 20)) - 1">20 日动量</button><button class="preset" data-formula="close * cumadj / (delay(close, 60) * delay(cumadj, 60)) - 1">60 日动量</button><button class="preset" data-formula="-1 * mean(amt, 20)">低成交额</button></div>
+      </div>
+      <div id="formulaPanel" hidden>
+        <div class="factor-row"><div class="factor-wrap"><label for="formula">FACTOR EXPRESSION</label><input class="factor" id="formula" spellcheck="false" value="-five_dr" autocomplete="off"></div><button id="run" class="run">▶　运行回测</button></div>
+        <div class="builder-foot"><span>字段</span><span class="chip">five_dr</span><span class="chip">open</span><span class="chip">high</span><span class="chip">low</span><span class="chip">close</span><span class="chip">amt</span><span class="chip">num_trades</span><span class="chip">cumadj</span><span>5DR 为当日复权收盘价相对前 5 日均价的偏离；函数：delay、mean</span></div>
+      </div>
+      <div id="pythonPanel" class="code-panel">
+        <label class="code-label" for="strategyCode">STRATEGY.PY · 每个交易日收盘后调用一次</label>
+        <textarea id="strategyCode" class="strategy-code" spellcheck="false">class Strategy:
+    name = "5DR 五日反转"
+    lookback = 5
+    stratification_field = "five_dr"
+    stratification_ascending = True
+
+    def __init__(self):
+        self.last_rebalance_month = None
+
+    def target_weights(self, ctx):
+        # five_dr = 当日复权收盘价 / 前 5 个交易日复权收盘均值 - 1
+        month = (ctx.date.year, ctx.date.month)
+        if month == self.last_rebalance_month:
+            return None
+
+        score = ctx.current("five_dr")
+        valid = np.isfinite(score) &amp; ctx.tradable()
+        candidates = np.flatnonzero(valid)
+        if not len(candidates):
+            return None
+
+        top_n = int(ctx.params["top_n"])
+        chosen = candidates[np.argsort(score[candidates])[:top_n]]
+        weights = np.zeros(len(ctx.symbols))
+        weights[chosen] = 1.0 / len(chosen)
+        self.last_rebalance_month = month
+        return weights</textarea>
+        <div class="code-help">默认策略已写好：每月从可交易证券中选 5DR 最低的若干只等权持有，持仓数可在下方调整。也可以直接改写代码；用 <code>ctx.current(field)</code> 和 <code>ctx.history(field, window)</code> 读取逐日数据、用 <code>ctx.positions</code>、<code>ctx.average_cost</code>、<code>ctx.cash</code> 读取账户状态。返回目标权重数组或 <code>None</code>；策略可维护状态、动态调仓和读取额外 Feather 因子。策略收盘后产生信号，次日开盘执行。</div>
+        <div class="strategy-import"><label for="strategyFile">导入策略 .py</label><input id="strategyFile" type="file" accept=".py,text/x-python,text/plain"><a href="/strategy_template.py">下载策略模板 ↓</a><span id="strategyFileName">可以导入文件，也可以直接编辑上方代码</span></div>
+        <div class="factor-row"><button id="runPython" class="run">▶　运行当前策略</button></div>
+      </div>
+      <details><summary>调整持仓数量、资金和回测区间</summary><div class="advanced">
+        <label class="field">持仓只数<input id="topN" class="small" type="number" min="1" max="500" value="20"></label>
+        <label class="field">初始资金（元）<input id="cash" class="small" type="number" min="1" step="10000" value="1000000"></label>
+        <label class="field">开始日期（可选）<input id="start" type="date" min="2020-01-02" max="2026-10-16"></label>
+        <label class="field">结束日期（可选）<input id="end" type="date" min="2020-01-02" max="2026-10-16"></label>
+        <div class="factor-help">次日开盘交易 · T+1 · 涨停买不到 · 跌停卖不出 · 100 股整手 · 含佣金、印花税与滑点</div>
+      </div></details>
+    </section>
+    <div id="notice" class="notice">载入最近一次示例结果…</div>
+    <div class="section-head"><div><h2>回测概览</h2><span id="period" class="period">等待回测结果</span></div><div class="downloads"><a id="navDownload" class="download" href="#" hidden>净值 CSV ↓</a><a id="tradesDownload" class="download" href="#" hidden>成交记录 CSV ↓</a><a id="tradeSummaryDownload" class="download" href="#" hidden>执行审计 CSV ↓</a><a id="layersDownload" class="download" href="#" hidden>分层 CSV ↓</a><a id="strategyDownload" class="download" href="#" hidden>策略代码 ↓</a><a id="runInfoDownload" class="download" href="#" hidden>数据快照 JSON ↓</a></div></div>
+    <section class="grid">
+      <article class="card chart-card"><div class="card-head"><div><div class="card-title">策略净值</div><div class="card-sub">从 1 元开始 · 已计交易费用</div></div><div class="legend"><i></i>组合净值</div></div><div id="chart" class="chart"><canvas id="canvas"></canvas><div id="empty" class="empty">运行回测后，净值曲线会显示在这里</div><div id="tooltip" class="tooltip"></div></div><div class="chart-foot"><span id="chartStart">—</span><span>交易日</span><span id="chartEnd">—</span></div></article>
+      <div class="metric-side">
+        <article class="card metric accent"><div class="metric-label">累计收益</div><div id="totalReturn" class="metric-value">—</div><div class="metric-note">含交易成本</div></article>
+        <article class="card metric"><div class="metric-label">年化收益</div><div id="annualReturn" class="metric-value">—</div><div class="metric-note">按日历年折算</div></article>
+        <article class="card metric"><div class="metric-label">最大回撤</div><div id="drawdown" class="metric-value">—</div><div class="metric-note">历史峰值至谷值</div></article>
+        <article class="card metric"><div class="metric-label">夏普比率</div><div id="sharpe" class="metric-value">—</div><div class="metric-note">无风险利率按 0 计</div></article>
+        <article class="card metric"><div class="metric-label">年化波动</div><div id="volatility" class="metric-value">—</div><div class="metric-note">日收益率年化</div></article>
+        <article class="card metric"><div class="metric-label">期末净值</div><div id="finalNav" class="metric-value">—</div><div class="metric-note">元</div></article>
+        <article class="card metric"><div class="metric-label">初始资金</div><div id="initialCash" class="metric-value">—</div><div class="metric-note">元</div></article>
+        <article class="card metric"><div class="metric-label">交易日数</div><div id="days" class="metric-value">—</div><div class="metric-note">纳入统计的交易日</div></article>
+      </div>
+    </section>
+    <section id="layerCard" class="card layer-card" hidden>
+      <div class="card-head"><div><div class="card-title">因子五层净值</div><div id="layerSubtitle" class="card-sub">按因子值等数量分组；展示下一交易日复权收盘到收盘的毛收益。</div></div><div id="layerLegend" class="layer-legend"></div></div>
+      <div class="layer-chart"><canvas id="layerCanvas"></canvas></div>
+      <div class="layer-note">分层图用于检查因子排序效果，使用等权理论组合，不计交易成本、涨跌停和整手限制；上方策略净值仍按实际撮合规则计算。</div>
+    </section>
+    <section class="card audit-card">
+      <div class="card-head"><div><div class="card-title">交易执行与数据覆盖</div><div class="card-sub">用订单请求量、成交量和市场日线约束检查回测撮合质量</div></div><div><a class="download" href="/security-status-template.csv">ST 状态表模板 ↓</a><a class="download" href="/limit-rules-template.csv">涨跌幅规则模板 ↓</a></div></div>
+      <div class="audit-grid">
+        <div class="audit-item"><div class="audit-label">委托尝试次数</div><div id="orderCount" class="audit-value">—</div></div>
+        <div class="audit-item"><div class="audit-label">完整成交率</div><div id="orderFillRate" class="audit-value">—</div></div>
+        <div class="audit-item"><div class="audit-label">股数成交率</div><div id="shareFillRate" class="audit-value">—</div></div>
+        <div class="audit-item"><div class="audit-label">历史 ST 状态覆盖</div><div id="stCoverage" class="audit-value">—</div></div>
+        <div class="audit-item"><div class="audit-label">平均每日一字涨停</div><div id="limitUpCount" class="audit-value">—</div></div>
+        <div class="audit-item"><div class="audit-label">平均每日一字跌停</div><div id="limitDownCount" class="audit-value">—</div></div>
+      </div>
+      <div id="auditNote" class="audit-note">完成回测后显示状态覆盖率与执行限制。</div>
+      <div id="auditReasons" class="audit-reasons"></div>
+      <div class="audit-foot">“完整成交率”按完整成交订单数 / 委托数计算；“股数成交率”按实际成交股数 / 委托股数计算。日线数据不能还原排队量。</div>
+    </section>
+    <div class="rule-note"><strong>撮合假设</strong>　策略收盘后生成信号，下一交易日开盘执行。开盘与最低价均封在涨停价时不买入；开盘与最高价均封在跌停价时不卖出。停牌、无成交、T+1、整手、佣金、卖出印花税与滑点均计入。仅排除状态表中明确标记的 ST；覆盖率会显示在上方。日线数据无法还原真实排队量和盘中成交路径。</div>
+    <footer class="footer"><span>仅供课程研究与教学演示，不构成投资建议。</span><span>运行数据：Feather 日频矩阵 · 本机保存</span></footer>
+  </div>
+  <script>
+    const byId = id => document.getElementById(id);
+    const formulaInput = byId('formula');
+    let strategyMode = 'python';
+    document.querySelectorAll('.mode-tab').forEach(tab=>tab.addEventListener('click',()=>{
+      strategyMode=tab.dataset.mode;
+      document.querySelectorAll('.mode-tab').forEach(item=>item.classList.toggle('active',item===tab));
+      byId('formulaPanel').hidden=strategyMode!=='formula';byId('pythonPanel').hidden=strategyMode!=='python';
+      byId('formulaPresets').hidden=strategyMode!=='formula';
+    }));
+    document.querySelectorAll('.preset').forEach(button => button.addEventListener('click', () => { formulaInput.value = button.dataset.formula; formulaInput.focus(); }));
+    let currentSeries = [];
+    let currentLayers = [];
+    let activeJob = null;
+    function percent(n){return `${(Number(n)*100).toFixed(2)}%`}
+    function money(n){return Number(n).toLocaleString('zh-CN',{maximumFractionDigits:0})}
+    function setMetric(id,value,cls){const e=byId(id);e.textContent=value;e.classList.remove('good','bad');if(cls)e.classList.add(cls)}
+    function showResult(result, message){
+      if(!result || !result.metrics)return;
+      const m=result.metrics;currentSeries=result.series||[];currentLayers=result.layers||[];
+      setMetric('totalReturn',percent(m.total_return),m.total_return>=0?'good':'bad');
+      setMetric('annualReturn',percent(m.annualized_return),m.annualized_return>=0?'good':'bad');
+      setMetric('drawdown',percent(m.max_drawdown),'bad');
+      setMetric('sharpe',Number(m.sharpe_ratio_rf0).toFixed(2),m.sharpe_ratio_rf0>=1?'good':'');
+      setMetric('volatility',percent(m.annualized_volatility),'');
+      setMetric('finalNav',money(m.final_nav),m.final_nav>=m.initial_cash?'good':'bad');
+      setMetric('initialCash',money(m.initial_cash),'');setMetric('days',Number(m.trading_days).toLocaleString('zh-CN'),'');
+      const audit=result.order_audit||{};
+      byId('orderCount').textContent=Number(audit.submitted_orders||0).toLocaleString('zh-CN');
+      byId('orderFillRate').textContent=percent(audit.order_completion_rate||0);
+      byId('shareFillRate').textContent=percent(audit.share_fill_rate||0);
+      byId('stCoverage').textContent=percent(result.st_status_coverage||0);
+      byId('limitUpCount').textContent=Number(result.average_limit_up_count||0).toFixed(1);
+      byId('limitDownCount').textContent=Number(result.average_limit_down_count||0).toFixed(1);
+      const coverage=Number(result.st_status_coverage||0),auditNote=byId('auditNote');
+      auditNote.className=`audit-note ${coverage>=0.99?'ok':''}`;
+      auditNote.textContent=coverage>=0.99
+        ? `已读取 ${result.status_source||'状态数据'}；按日期识别并过滤 ST。`
+        : `ST 历史状态覆盖 ${percent(coverage)}（来源：${result.status_source||'无'}）。请将完整历史区间表保存为行情数据目录中的 security_status.csv；当前缺失状态无法确认的证券不会被标记为 ST。`;
+      const reasonRoot=byId('auditReasons');reasonRoot.replaceChildren();
+      (audit.reasons||[]).filter(row=>row.status==='blocked').slice(0,8).forEach(row=>{
+        const item=document.createElement('span'),label=document.createElement('span'),count=document.createElement('b');
+        item.className='audit-reason';label.textContent=`${row.side==='buy'?'买入':'卖出'} · ${row.reason||'受限'}`;count.textContent=Number(row.orders||0).toLocaleString('zh-CN');item.append(label,count);reasonRoot.append(item);
+      });
+      byId('period').textContent=`${result.period?.[0]||'—'} 至 ${result.period?.[1]||'—'} · ${result.strategy_name||(result.formula?'自定义因子':'20 日动量示例')}`;
+      if(result.data_asof)byId('dataset').textContent=`数据快照截至 ${result.data_asof} · ${Number(result.symbols||0).toLocaleString('zh-CN')} 只证券`;
+      byId('layerSubtitle').textContent=`分层因子：${result.layer_factor||'—'} · ${result.layer_order||'低值到高值'}；每月分组，展示下一交易日复权收盘到收盘毛收益。`;
+      byId('chartStart').textContent=result.period?.[0]||'—';byId('chartEnd').textContent=result.period?.[1]||'—';
+      for(const [id,key] of [['navDownload','nav'],['tradesDownload','trades'],['tradeSummaryDownload','trade_summary'],['layersDownload','layers'],['strategyDownload','strategy'],['runInfoDownload','run']]){const a=byId(id);a.href=result.downloads?.[key]||'#';a.hidden=!result.downloads?.[key]}
+      byId('empty').style.display=currentSeries.length?'none':'grid';byId('layerCard').hidden=!currentLayers.length;
+      renderLayerLegend();drawChart();drawLayerChart();if(message)notice(message);
+    }
+    const noticeEl=byId('notice');function notice(text,kind=''){noticeEl.textContent=text;noticeEl.className=`notice ${kind}`}
+    const layerColors=['#3d78a8','#4d9d8b','#8ba54a','#d29a45','#bf665d'];
+    function renderLayerLegend(){byId('layerLegend').replaceChildren(...currentLayers.map((layer,i)=>{const item=document.createElement('span'),dot=document.createElement('i'),label=document.createElement('span');dot.style.background=layerColors[i%layerColors.length];label.textContent=`${layer.label} ${percent(layer.total_return)}`;item.append(dot,label);return item}))}
+    function drawChart(){
+      const canvas=byId('canvas'),box=byId('chart'),rect=box.getBoundingClientRect(),ratio=window.devicePixelRatio||1;
+      if(rect.width<10||rect.height<10)return;canvas.width=Math.round(rect.width*ratio);canvas.height=Math.round(rect.height*ratio);
+      const ctx=canvas.getContext('2d');ctx.scale(ratio,ratio);ctx.clearRect(0,0,rect.width,rect.height);
+      if(currentSeries.length<2)return;
+      const pad={l:42,r:10,t:12,b:23},w=rect.width-pad.l-pad.r,h=rect.height-pad.t-pad.b;
+      const vals=currentSeries.map(p=>p.value),lo=Math.min(0.8,...vals),hi=Math.max(1.2,...vals),span=(hi-lo)||1;
+      ctx.font='10px -apple-system,BlinkMacSystemFont,sans-serif';ctx.lineWidth=1;
+      for(let i=0;i<4;i++){const y=pad.t+h*i/3,v=hi-span*i/3;ctx.strokeStyle='#edf0ed';ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(rect.width-pad.r,y);ctx.stroke();ctx.fillStyle='#8c9990';ctx.textAlign='right';ctx.fillText(v.toFixed(2),pad.l-8,y+3)}
+      const zeroY=pad.t+(hi-1)/span*h;ctx.setLineDash([3,4]);ctx.strokeStyle='#d7dfd9';ctx.beginPath();ctx.moveTo(pad.l,zeroY);ctx.lineTo(rect.width-pad.r,zeroY);ctx.stroke();ctx.setLineDash([]);
+      const points=currentSeries.map((p,i)=>({x:pad.l+w*i/(currentSeries.length-1),y:pad.t+(hi-p.value)/span*h,p}));
+      const grad=ctx.createLinearGradient(0,pad.t,0,pad.t+h);grad.addColorStop(0,'rgba(42,150,108,.20)');grad.addColorStop(1,'rgba(42,150,108,0)');ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.lineTo(points.at(-1).x,pad.t+h);ctx.lineTo(points[0].x,pad.t+h);ctx.closePath();ctx.fillStyle=grad;ctx.fill();
+      ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.strokeStyle='#218a63';ctx.lineWidth=2;ctx.lineJoin='round';ctx.stroke();
+      canvas.onmousemove=ev=>{const b=canvas.getBoundingClientRect(),x=ev.clientX-b.left;const idx=Math.max(0,Math.min(points.length-1,Math.round((x-pad.l)/w*(points.length-1)))),p=points[idx],tip=byId('tooltip');tip.innerHTML=`${p.p.date}<br><b>${p.p.value.toFixed(3)}×</b>`;tip.style.left=`${Math.min(Math.max(8,p.x),rect.width-105)}px`;tip.style.top=`${Math.max(32,p.y)}px`;tip.style.opacity=1};canvas.onmouseleave=()=>byId('tooltip').style.opacity=0;
+    }
+    function drawLayerChart(){
+      const canvas=byId('layerCanvas'),box=canvas.parentElement,rect=box.getBoundingClientRect(),ratio=window.devicePixelRatio||1;
+      if(rect.width<10||rect.height<10)return;canvas.width=Math.round(rect.width*ratio);canvas.height=Math.round(rect.height*ratio);
+      const ctx=canvas.getContext('2d');ctx.scale(ratio,ratio);ctx.clearRect(0,0,rect.width,rect.height);
+      const usable=currentLayers.filter(layer=>layer.series?.length>1);if(!usable.length)return;
+      const pad={l:46,r:14,t:12,b:22},w=rect.width-pad.l-pad.r,h=rect.height-pad.t-pad.b;
+      const values=usable.flatMap(layer=>layer.series.map(point=>point.value)),lo=Math.min(0.8,...values),hi=Math.max(1.2,...values),span=(hi-lo)||1;
+      ctx.font='10px -apple-system,BlinkMacSystemFont,sans-serif';ctx.lineWidth=1;
+      for(let i=0;i<4;i++){const y=pad.t+h*i/3,v=hi-span*i/3;ctx.strokeStyle='#edf0ed';ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(rect.width-pad.r,y);ctx.stroke();ctx.fillStyle='#8c9990';ctx.textAlign='right';ctx.fillText(v.toFixed(2),pad.l-8,y+3)}
+      const zeroY=pad.t+(hi-1)/span*h;ctx.setLineDash([3,4]);ctx.strokeStyle='#d7dfd9';ctx.beginPath();ctx.moveTo(pad.l,zeroY);ctx.lineTo(rect.width-pad.r,zeroY);ctx.stroke();ctx.setLineDash([]);
+      usable.forEach((layer,index)=>{const points=layer.series.map((point,i)=>({x:pad.l+w*i/(layer.series.length-1),y:pad.t+(hi-point.value)/span*h}));ctx.beginPath();points.forEach((point,i)=>i?ctx.lineTo(point.x,point.y):ctx.moveTo(point.x,point.y));ctx.strokeStyle=layerColors[index%layerColors.length];ctx.lineWidth=1.8;ctx.lineJoin='round';ctx.stroke()});
+    }
+    window.addEventListener('resize',()=>{drawChart();drawLayerChart()});
+    async function runBacktest(mode=strategyMode){
+      if(activeJob)return;const button=byId(mode==='python'?'runPython':'run');button.disabled=true;button.textContent='⟳　提交中…';notice('正在提交回测…','busy');
+      try{
+        const payload={mode,formula:formulaInput.value,strategy_code:byId('strategyCode').value,top_n:byId('topN').value,initial_cash:byId('cash').value,start:byId('start').value,end:byId('end').value};
+        const response=await fetch('/api/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const body=await response.json();
+        if(!response.ok)throw new Error(body.error||'提交失败');activeJob=body.run_id;button.textContent='⟳　回测运行中…';notice('回测已开始；首次载入数据可能需要一点时间。','busy');
+        while(activeJob){await new Promise(r=>setTimeout(r,1100));const poll=await fetch(`/api/run?id=${activeJob}`);const job=await poll.json();if(job.status==='done'){showResult(job.result,'回测完成。结果文件已保存在本地。');activeJob=null}else if(job.status==='error'){throw new Error(job.message)}else notice(job.message||'正在计算…','busy')}
+      }catch(err){activeJob=null;notice(err.message||'回测遇到错误','error')}
+      finally{button.disabled=false;button.textContent=mode==='python'?'▶　运行 Python 策略':'▶　运行回测'}
+    }
+    byId('run').addEventListener('click',()=>runBacktest('formula'));byId('runPython').addEventListener('click',()=>runBacktest('python'));formulaInput.addEventListener('keydown',e=>{if(e.key==='Enter')runBacktest('formula')});
+    byId('strategyFile').addEventListener('change',async event=>{const file=event.target.files?.[0];if(!file)return;if(file.size>200000){notice('策略文件不能超过 200 KB','error');event.target.value='';return}try{byId('strategyCode').value=await file.text();byId('strategyFileName').textContent=`已导入 ${file.name}`;notice('策略已导入，检查代码后点击“运行当前策略”。')}catch(error){notice('读取策略文件失败','error')}});
+    fetch('/api/latest').then(r=>r.json()).then(data=>{if(data.metrics){showResult(data,`已载入最近一次回测结果（区间收益 ${percent(data.metrics.total_return)}）；点击“运行当前策略”即可回测上方 5DR 策略。`)}else notice('课程数据已就绪，点击“运行当前策略”开始。')}).catch(()=>notice('本地回测服务连接失败，请重启网页服务。','error'));
+  </script>
+</body>
+</html>

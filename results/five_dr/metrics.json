@@ -1,0 +1,22 @@
+{
+  "initial_cash": 1000000000.0,
+  "final_nav": 563675244.3611579,
+  "total_return": -0.4363247556388421,
+  "annualized_return": -0.2805215145363724,
+  "annualized_volatility": 0.35727831122964254,
+  "sharpe_ratio_rf0": -0.7822162347611173,
+  "max_drawdown": -0.6309873919831519,
+  "turnover_over_average_nav": 163.46034797881794,
+  "st_status_coverage": 1.0,
+  "average_limit_up_count": 6.7924528301886795,
+  "average_limit_down_count": 4.658018867924528,
+  "trading_days": 424.0,
+  "submitted_orders": 13742.0,
+  "filled_orders": 6804.0,
+  "partial_orders": 5308.0,
+  "blocked_orders": 1630.0,
+  "order_completion_rate": 0.4951244360355116,
+  "order_execution_rate": 0.8813855334012516,
+  "share_fill_rate": 0.4124376836152827,
+  "ending_market_value": 183561714.0
+}

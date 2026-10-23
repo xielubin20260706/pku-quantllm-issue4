@@ -1,0 +1,377 @@
+{
+  "strategy": "同口径过滤后等权基准",
+  "mode": "equal",
+  "start": "2025-01-02",
+  "end": "2026-09-30",
+  "signal_anchor": "2024-12-31",
+  "end_clear_signal": "2026-09-29",
+  "rebalance_every_trading_sessions": 5,
+  "initial_cash": 1000000000.0,
+  "listing_filter_sessions": 60,
+  "liquidity_excluded_fraction": 0.2,
+  "tail_trim_fraction_each_side": 0.0,
+  "fees": {
+    "commission_rate": 0.0001,
+    "minimum_commission": 0.0,
+    "sell_stamp_duty": 0.0005,
+    "slippage_bps": 0.0
+  },
+  "max_turnover_participation_previous_day_amount": 0.1,
+  "data_symbols": 5451,
+  "status_source": "5pct_price_inference_2hits_60d",
+  "universe_counts_at_signals": {
+    "2024-12-31": {
+      "eligible": 3854,
+      "selected": 3854
+    },
+    "2025-01-08": {
+      "eligible": 3856,
+      "selected": 3856
+    },
+    "2025-01-15": {
+      "eligible": 3858,
+      "selected": 3858
+    },
+    "2025-01-22": {
+      "eligible": 3862,
+      "selected": 3862
+    },
+    "2025-02-06": {
+      "eligible": 3861,
+      "selected": 3861
+    },
+    "2025-02-13": {
+      "eligible": 3864,
+      "selected": 3864
+    },
+    "2025-02-20": {
+      "eligible": 3866,
+      "selected": 3866
+    },
+    "2025-02-27": {
+      "eligible": 3865,
+      "selected": 3865
+    },
+    "2025-03-06": {
+      "eligible": 3861,
+      "selected": 3861
+    },
+    "2025-03-13": {
+      "eligible": 3861,
+      "selected": 3861
+    },
+    "2025-03-20": {
+      "eligible": 3861,
+      "selected": 3861
+    },
+    "2025-03-27": {
+      "eligible": 3863,
+      "selected": 3863
+    },
+    "2025-04-03": {
+      "eligible": 3865,
+      "selected": 3865
+    },
+    "2025-04-11": {
+      "eligible": 3865,
+      "selected": 3865
+    },
+    "2025-04-18": {
+      "eligible": 3867,
+      "selected": 3867
+    },
+    "2025-04-25": {
+      "eligible": 3861,
+      "selected": 3861
+    },
+    "2025-05-07": {
+      "eligible": 3846,
+      "selected": 3846
+    },
+    "2025-05-14": {
+      "eligible": 3849,
+      "selected": 3849
+    },
+    "2025-05-21": {
+      "eligible": 3847,
+      "selected": 3847
+    },
+    "2025-05-28": {
+      "eligible": 3841,
+      "selected": 3841
+    },
+    "2025-06-05": {
+      "eligible": 3843,
+      "selected": 3843
+    },
+    "2025-06-12": {
+      "eligible": 3849,
+      "selected": 3849
+    },
+    "2025-06-19": {
+      "eligible": 3854,
+      "selected": 3854
+    },
+    "2025-06-26": {
+      "eligible": 3857,
+      "selected": 3857
+    },
+    "2025-07-03": {
+      "eligible": 3856,
+      "selected": 3856
+    },
+    "2025-07-10": {
+      "eligible": 3857,
+      "selected": 3857
+    },
+    "2025-07-17": {
+      "eligible": 3861,
+      "selected": 3861
+    },
+    "2025-07-24": {
+      "eligible": 3862,
+      "selected": 3862
+    },
+    "2025-07-31": {
+      "eligible": 3862,
+      "selected": 3862
+    },
+    "2025-08-07": {
+      "eligible": 3863,
+      "selected": 3863
+    },
+    "2025-08-14": {
+      "eligible": 3865,
+      "selected": 3865
+    },
+    "2025-08-21": {
+      "eligible": 3861,
+      "selected": 3861
+    },
+    "2025-08-28": {
+      "eligible": 3865,
+      "selected": 3865
+    },
+    "2025-09-04": {
+      "eligible": 3866,
+      "selected": 3866
+    },
+    "2025-09-11": {
+      "eligible": 3867,
+      "selected": 3867
+    },
+    "2025-09-18": {
+      "eligible": 3869,
+      "selected": 3869
+    },
+    "2025-09-25": {
+      "eligible": 3868,
+      "selected": 3868
+    },
+    "2025-10-10": {
+      "eligible": 3863,
+      "selected": 3863
+    },
+    "2025-10-17": {
+      "eligible": 3868,
+      "selected": 3868
+    },
+    "2025-10-24": {
+      "eligible": 3870,
+      "selected": 3870
+    },
+    "2025-10-31": {
+      "eligible": 3867,
+      "selected": 3867
+    },
+    "2025-11-07": {
+      "eligible": 3867,
+      "selected": 3867
+    },
+    "2025-11-14": {
+      "eligible": 3872,
+      "selected": 3872
+    },
+    "2025-11-21": {
+      "eligible": 3869,
+      "selected": 3869
+    },
+    "2025-11-28": {
+      "eligible": 3861,
+      "selected": 3861
+    },
+    "2025-12-05": {
+      "eligible": 3861,
+      "selected": 3861
+    },
+    "2025-12-12": {
+      "eligible": 3863,
+      "selected": 3863
+    },
+    "2025-12-19": {
+      "eligible": 3865,
+      "selected": 3865
+    },
+    "2025-12-26": {
+      "eligible": 3869,
+      "selected": 3869
+    },
+    "2026-01-06": {
+      "eligible": 3870,
+      "selected": 3870
+    },
+    "2026-01-13": {
+      "eligible": 3866,
+      "selected": 3866
+    },
+    "2026-01-20": {
+      "eligible": 3871,
+      "selected": 3871
+    },
+    "2026-01-27": {
+      "eligible": 3872,
+      "selected": 3872
+    },
+    "2026-02-03": {
+      "eligible": 3873,
+      "selected": 3873
+    },
+    "2026-02-10": {
+      "eligible": 3872,
+      "selected": 3872
+    },
+    "2026-02-25": {
+      "eligible": 3873,
+      "selected": 3873
+    },
+    "2026-03-04": {
+      "eligible": 3875,
+      "selected": 3875
+    },
+    "2026-03-11": {
+      "eligible": 3878,
+      "selected": 3878
+    },
+    "2026-03-18": {
+      "eligible": 3879,
+      "selected": 3879
+    },
+    "2026-03-25": {
+      "eligible": 3882,
+      "selected": 3882
+    },
+    "2026-04-01": {
+      "eligible": 3881,
+      "selected": 3881
+    },
+    "2026-04-09": {
+      "eligible": 3889,
+      "selected": 3889
+    },
+    "2026-04-16": {
+      "eligible": 3888,
+      "selected": 3888
+    },
+    "2026-04-23": {
+      "eligible": 3883,
+      "selected": 3883
+    },
+    "2026-04-30": {
+      "eligible": 3836,
+      "selected": 3836
+    },
+    "2026-05-12": {
+      "eligible": 3853,
+      "selected": 3853
+    },
+    "2026-05-19": {
+      "eligible": 3861,
+      "selected": 3861
+    },
+    "2026-05-26": {
+      "eligible": 3862,
+      "selected": 3862
+    },
+    "2026-06-02": {
+      "eligible": 3861,
+      "selected": 3861
+    },
+    "2026-06-09": {
+      "eligible": 3861,
+      "selected": 3861
+    },
+    "2026-06-16": {
+      "eligible": 3856,
+      "selected": 3856
+    },
+    "2026-06-24": {
+      "eligible": 3862,
+      "selected": 3862
+    },
+    "2026-07-01": {
+      "eligible": 3860,
+      "selected": 3860
+    },
+    "2026-07-08": {
+      "eligible": 3862,
+      "selected": 3862
+    },
+    "2026-07-15": {
+      "eligible": 3868,
+      "selected": 3868
+    },
+    "2026-07-22": {
+      "eligible": 3871,
+      "selected": 3871
+    },
+    "2026-07-29": {
+      "eligible": 3869,
+      "selected": 3869
+    },
+    "2026-08-05": {
+      "eligible": 3872,
+      "selected": 3872
+    },
+    "2026-08-12": {
+      "eligible": 3875,
+      "selected": 3875
+    },
+    "2026-08-19": {
+      "eligible": 3876,
+      "selected": 3876
+    },
+    "2026-08-26": {
+      "eligible": 3878,
+      "selected": 3878
+    },
+    "2026-09-02": {
+      "eligible": 3876,
+      "selected": 3876
+    },
+    "2026-09-09": {
+      "eligible": 3874,
+      "selected": 3874
+    },
+    "2026-09-16": {
+      "eligible": 3873,
+      "selected": 3873
+    },
+    "2026-09-23": {
+      "eligible": 3873,
+      "selected": 3873
+    },
+    "2026-09-29": {
+      "eligible": 0,
+      "selected": 0
+    }
+  },
+  "execution": "signal after close; next session open; final close liquidation; A-share daily limits/T+1/board lots",
+  "st_inference": {
+    "method": "two sealed +/-5% one-price sessions within 60 trading days; point-in-time, persistent after detection",
+    "price_limit_events": 8450,
+    "inferred_symbols": 502,
+    "inferred_symbol_days": 511256,
+    "official_status_source": "missing",
+    "is_official_history": false
+  }
+}
